@@ -16,7 +16,9 @@ public class Window extends JFrame {
     private JPanel compressImageJPanel;
     private JPanel panel1;
 
-    public Window(){
+    BufferedImage compressImage;
+
+    public Window() {
         this.setContentPane(panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -29,7 +31,7 @@ public class Window extends JFrame {
                 int result = fileChooser.showOpenDialog(Window.this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
-                    ((ImagePanel)originalImageJPanel).setFile(selectedFile);
+                    ((ImagePanel) originalImageJPanel).setFile(selectedFile);
                     originalImageJPanel.repaint();
                 }
             }
@@ -37,20 +39,18 @@ public class Window extends JFrame {
         compressButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BufferedImage originalImage = ((ImagePanel)originalImageJPanel).getImage();
-                String format = ImageUtils.getFileFormat(((ImagePanel)originalImageJPanel).getFile());
-                BufferedImage compressImage = DCT.transform(ImageUtils.deepCopy(originalImage));
-                ((ImagePanel)compressImageJPanel).setImage(compressImage);
+                BufferedImage originalImage = ((ImagePanel) originalImageJPanel).getImage();
+                compressImage = DCT.transform(ImageUtils.deepCopy(originalImage));
+                ((ImagePanel) compressImageJPanel).setImage(compressImage);
                 compressImageJPanel.repaint();
             }
         });
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String format = ImageUtils.getFileFormat(((ImagePanel)compressImageJPanel).getFile());
-                File outputfile = new File("image." + format);
+                File outputFile = new File("image.jpg");
                 try {
-                    ImageIO.write(((ImagePanel)compressImageJPanel).getImage(), format, outputfile);
+                    ImageIO.write(compressImage, "jpg", outputFile);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

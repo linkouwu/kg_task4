@@ -11,15 +11,13 @@ import java.util.logging.Logger;
 
 public class ImagePanel extends JPanel {
     private BufferedImage bi;
-    private File file;
 
     public ImagePanel() {
     }
 
-    public void setFile(File selectedFile){
+    public void setFile(File selectedFile) {
         try {
             this.bi = ImageIO.read(selectedFile);
-            this.file = selectedFile;
         } catch (IOException ex) {
             Logger.getLogger(ImagePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -27,16 +25,16 @@ public class ImagePanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (bi!=null) {
+        if (bi != null) {
             Graphics g2 = g.create();
             int preferWidth = bi.getWidth();
             int preferHeight = bi.getHeight();
-            double padding = 1.25;
-            if (bi.getWidth()>getWidth()/padding || bi.getHeight()> getHeight()/padding){
-                double k = Math.max(getWidth()/(double)bi.getWidth(), getHeight()/(double)bi.getHeight());
-                preferWidth= (int) (preferWidth*k/padding);
-                preferHeight= (int) (preferHeight*k/padding);
-            }
+//            double padding = 1.25;
+//            if (bi.getWidth()>getWidth()/padding || bi.getHeight()> getHeight()/padding){
+//                double k = Math.max(getWidth()/(double)bi.getWidth(), getHeight()/(double)bi.getHeight());
+//                preferWidth= (int) (preferWidth*k/padding);
+//                preferHeight= (int) (preferHeight*k/padding);
+//            }
             g2.drawImage(bi, 0, 0, preferWidth, preferHeight, null);
             g2.dispose();
         }
@@ -49,13 +47,4 @@ public class ImagePanel extends JPanel {
     public void setImage(BufferedImage bi) {
         this.bi = bi;
     }
-
-    public File getFile() {
-        return file;
-    }
-
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return new Dimension(bi.getWidth() / 2, bi.getHeight() / 2);
-//    }
 }

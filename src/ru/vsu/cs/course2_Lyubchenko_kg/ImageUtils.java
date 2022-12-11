@@ -22,13 +22,13 @@ public class ImageUtils {
         }
     }
 
-    public static String getFileFormat(File file){
+    public static String getFileFormat(File file) {
         String format = "";
         String path = file.getPath();
 
         int i = path.lastIndexOf('.');
         if (i > 0) {
-            format = path.substring(i+1);
+            format = path.substring(i + 1);
         }
         return format;
     }
